@@ -1,20 +1,19 @@
 rpm-tomcat7
 ===========
 
-An RPM spec file to install Tomcat 7.0.
+An RPM spec file to build Tomcat 7.0 RPMs.
 
-To Build:
+Steps to build them:
 
-`sudo yum -y install rpmdevtools && rpmdev-setuptree`
+```bash
+sudo yum -y install rpmdevtools && rpmdev-setuptree
 
-`wget https://raw.github.com/nmilford/rpm-tomcat7/master/tomcat7.spec -O ~/rpmbuild/SPECS/tomcat7.spec --no-check-certificate`
+wget -P ~/rpmbuild/SPECS https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.spec
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.init
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.sysconfig
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.logrotate
+wget -P ~/rpmbuild/SOURCES https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz
+rpmbuild -bb ~/rpmbuild/SPECS/tomcat7.spec
+```
 
-`wget https://raw.github.com/nmilford/rpm-tomcat7/master/tomcat7.init -O ~/rpmbuild/SOURCES/tomcat7.init --no-check-certificate`
-
-`wget https://raw.github.com/nmilford/rpm-tomcat7/master/tomcat7.sysconfig -O ~/rpmbuild/SOURCES/tomcat7.sysconfig --no-check-certificate`
-
-`wget https://raw.github.com/nmilford/rpm-tomcat7/master/tomcat7.logrotate -O ~/rpmbuild/SOURCES/tomcat7.logrotate --no-check-certificate`
-
-`wget http://www.motorlogy.com/apache/tomcat/tomcat-7/v7.0.63/bin/apache-tomcat-7.0.63.tar.gz -O ~/rpmbuild/SOURCES/apache-tomcat-7.0.63.tar.gz`
-
-`rpmbuild -bb ~/rpmbuild/SPECS/tomcat7.spec`
+then you can install the RPMs available at ~/rpmbuild/RPMS/noarch using either `yum` or `rpm`

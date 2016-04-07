@@ -8,11 +8,11 @@ Steps to build them:
 ```bash
 sudo yum -y install rpmdevtools && rpmdev-setuptree
 
-wget -P ~/rpmbuild/SPECS https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.spec
-wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.init
-wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.sysconfig
-wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.65/tomcat7.logrotate
-wget -P ~/rpmbuild/SOURCES https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz
+wget -P ~/rpmbuild/SPECS https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.spec
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.init
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.sysconfig
+wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.logrotate
+wget -P ~/rpmbuild/SOURCES https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.tar.gz
 rpmbuild -bb ~/rpmbuild/SPECS/tomcat7.spec
 ```
 

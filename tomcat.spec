@@ -1,14 +1,3 @@
-# To Build:
-#
-# sudo yum -y install rpmdevtools && rpmdev-setuptree
-#
-# wget -P ~/rpmbuild/SPECS https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.spec
-# wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.init
-# wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.sysconfig
-# wget -P ~/rpmbuild/SOURCES https://raw.github.com/inab/rpm-tomcat7/7.0.68/tomcat7.logrotate
-# wget -P ~/rpmbuild/SOURCES https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.tar.gz
-# rpmbuild -bb ~/rpmbuild/SPECS/tomcat7.spec
-
 %define __jar_repack %{nil}
 %define tomcat_home /usr/share/tomcat
 %define tomcat_group tomcat
@@ -27,6 +16,9 @@ Source1:    %{name}.service
 Source2:    %{name}.sysconfig
 Source3:    %{name}.logrotate
 Source4:    %{name}.conf
+Source5:    libexec_tomcat/functions
+Source6:    libexec_tomcat/preamble
+Source7:    libexec_tomcat/server
 Requires:   java, %{name}-lib = %{version}-%{release}
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -161,6 +153,12 @@ install    -m 644 %_sourcedir/%{name}.sysconfig %{buildroot}/%{_sysconfdir}/%{na
 install -d -m 755 %{buildroot}/%{_sysconfdir}/logrotate.d
 install    -m 644 %_sourcedir/%{name}.logrotate %{buildroot}/%{_sysconfdir}/logrotate.d/%{name}
 
+# Drop libexec
+install -d -m 755 %{buildroot}/%{_libexecdir}/%{name}
+install    -m 644 %_sourcedir/libexec_tomcat/functions %{buildroot}/%{_libexecdir}/%{name}/functions
+install    -m 755 %_sourcedir/libexec_tomcat/preamble %{buildroot}/%{_libexecdir}/%{name}/preamble
+install    -m 755 %_sourcedir/libexec_tomcat/server %{buildroot}/%{_libexecdir}/%{name}/server
+
 %clean
 rm -rf %{buildroot}
 
@@ -179,6 +177,8 @@ getent passwd %{tomcat_user} >/dev/null || /usr/sbin/useradd --comment "Tomcat D
 %dir /var/lib/%{name}
 %{_unitdir}/%{name}.service
 %{_sysconfdir}/logrotate.d/%{name}
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/*
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}
